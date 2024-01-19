@@ -1,4 +1,5 @@
 <?php
+// Define constants for upload directory, maximum file size, allowed file extensions, and allowed MIME types.
 define('UPLOAD_DIRECTORY', '/var/php_uploaded_files/');
 define('MAXSIZE', 5242880); // 5MB in bytes.
 // Before PHP 5.6, we can't define arrays as constants.
@@ -22,6 +23,7 @@ $ALLOWED_MIMES = array('application/pdf', // For .pdf files.
 // not.
 // ------------------------------------------------------------------------------------------
 
+// Function to check if file's extension and MIME type are allowed.
 function validFileType($uploadedTempFile, $destFilePath) {
 global $ALLOWED_EXTENSIONS, $ALLOWED_MIMES;
 $fileExtension = pathinfo($destFilePath, PATHINFO_EXTENSION);
@@ -42,6 +44,7 @@ return $validFileType;
 // * @return Response with string of the result; if it has been successful or not.
 // -------------------------------------------------------------------------------------------
 
+// Function to handle file upload.
 function handleUpload() {
 $uploadedTempFile = $_FILES['file']['tmp_name'];
 $filename = basename($_FILES['file']['name']);
@@ -61,7 +64,7 @@ type and size.';
 }
 return $response;
 }
-// Flow starts here.
+// Flow starts here. Begin processing the form submission.
 $validFormSubmission = !empty($_FILES);
 if ($validFormSubmission) {
 $error = $_FILES['file']['error'];
